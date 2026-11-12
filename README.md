@@ -16,7 +16,7 @@
 
 ## Алгоритм
 
-\`\`\`mermaid
+```mermaid
 flowchart LR
  A[RGB-снимок] --> B[Tiny U-Net]
  B --> C[Маска облаков]
@@ -26,7 +26,7 @@ flowchart LR
  E -->|Нет| G[Предложить сохранить]
  F --> H[Проверка оператором]
  G --> H
-\`\`\`
+```
 
 **Облачность (%) = 100 × количество облачных пикселей / количество всех пикселей изображения.**
 
@@ -46,7 +46,7 @@ flowchart LR
 
 Нужны **собственные RGB-снимки** и совместимый checkpoint Tiny U-Net: веса и исходные данные намеренно не размещены в этом публичном репозитории.
 
-\`\`\`powershell
+```powershell
 py -3.11 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 .\.venv\Scripts\python.exe -m pip install "numpy>=1.26,<3"
@@ -55,32 +55,32 @@ py -3.11 -m venv .venv
 .\.venv\Scripts\python.exe run_batch_v4.py --input data/new_raw --model models/cloudvision_unet_v4_policy.pt --device auto --out reports/demo --limit 10
 .\.venv\Scripts\python.exe build_operator_report_v4.py --input data/new_raw --batch reports/demo
 Start-Process .\reports\demo\operator_review\index.html
-\`\`\`
+```
 
 Запуск лёгких тестов без checkpoint:
 
-\`\`\`powershell
+```powershell
 .\.venv\Scripts\python.exe -m unittest discover -s tests -p "test_batch_v4.py" -v
 .\.venv\Scripts\python.exe -m unittest discover -s tests -p "test_rules.py" -v
-\`\`\`
+```
 
 ## Структура
 
 | Раздел | Исходники |
 |---|---|
-| Пакетный GPU/CPU запуск | \`run_batch_v4.py\`, \`cloudvision/batch.py\` |
-| Модель и инференс | \`train_cloudvision.py\`, \`cloudvision/inference.py\` |
-| Операторский просмотр | \`build_operator_report_v4.py\` |
-| Ручная разметка | \`label_with_ai_fast.py\` |
-| Замороженные оценки | \`evaluate_v4_holdout.py\`, \`evaluate_v5_holdout.py\` |
-| Диагностика масок | \`compare_cloud_heavy_models.py\` |
-| Методики и результаты | \`docs/\` |
-| Тесты | \`tests/\` |
+| Пакетный GPU/CPU запуск | `run_batch_v4.py`, `cloudvision/batch.py` |
+| Модель и инференс | `train_cloudvision.py`, `cloudvision/inference.py` |
+| Операторский просмотр | `build_operator_report_v4.py` |
+| Ручная разметка | `label_with_ai_fast.py` |
+| Замороженные оценки | `evaluate_v4_holdout.py`, `evaluate_v5_holdout.py` |
+| Диагностика масок | `compare_cloud_heavy_models.py` |
+| Методики и результаты | `docs/` |
+| Тесты | `tests/` |
 
 ## Важные ограничения
 
 Порог именно **строго >75%**: значение ровно 75% означает **«сохранить»**. Исходные фотографии автоматически не удаляются. Ранее использованные TEST не применяются для подбора модели или порога.
 
-Модели \`.pt\`, исходные спутниковые фотографии, ручные PNG-маски, CSV/SQLite экспериментов и персональные данные **не опубликованы**. Для их распространения могут потребоваться отдельные права.
+Модели `.pt`, исходные спутниковые фотографии, ручные PNG-маски, CSV/SQLite экспериментов и персональные данные **не опубликованы**. Для их распространения могут потребоваться отдельные права.
 
-Публичная конкурсная версия основана на проекте [cloudvision-starter](https://github.com/Qllan/cloudvision-starter), ветка \`feature/gpu-batch-resume\` (снимок кода коммита \`8bc84d3\`). Этот репозиторий — **исходный код и документация**, а не сервис, работающий без обученных весов и данных.
+Публичная конкурсная версия основана на проекте [cloudvision-starter](https://github.com/Qllan/cloudvision-starter), ветка `feature/gpu-batch-resume` (снимок кода коммита `8bc84d3`). Этот репозиторий — **исходный код и документация**, а не сервис, работающий без обученных весов и данных.
