@@ -1,0 +1,28 @@
+# Do not publish private data and model checkpoints
+/data/
+/models/
+/reports/
+/checkpoints/
+/presentation/
+/selected_cloud_heavy.txt
+*.pt
+*.pth
+*.safetensors
+*.onnx
+*.sqlite3
+*.db
+
+# Development / secrets
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.vscode/
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
